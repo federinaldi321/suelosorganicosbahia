@@ -9,16 +9,17 @@
 <body>
 
     <div class="bg-glow"></div>
+    <div class="bg-glow secondary-glow"></div>
 
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo">Suelos Orgánicos<span> Bahía</span></div>
+            <div class="logo">🌱 Suelos Orgánicos<span> Bahía</span></div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#inicio" class="active">Inicio</a></li>
-                    <li><a href="#quienes-somos">Quiénes Somos</a></li>
-                    <li><a href="#que-hacemos">Qué Hacemos</a></li>
-                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#inicio" class="nav-item">Inicio</a></li>
+                    <li><a href="#quienes-somos" class="nav-item">Quiénes Somos</a></li>
+                    <li><a href="#que-hacemos" class="nav-item">Qué Hacemos</a></li>
+                    <li><a href="#productos" class="nav-item">Productos</a></li>
                 </ul>
             </nav>
         </div>
@@ -30,10 +31,13 @@
             <h1>Nutrición viva para despertar <span class="text-gradient">tu suelo</span></h1>
             <p>Transformamos la salud de tus plantas y cultivos desde la raíz. Potenciamos la microbiología nativa con tecnología orgánica desde Bahía Blanca.</p>
             <div class="cta-group">
-                <a href="https://www.instagram.com/suelosorganicosbahia/" target="_blank" class="btn btn-primary">Seguinos en Instagram</a>
+                <a href="https://www.instagram.com/suelosorganicosbahia/" target="_blank" class="btn btn-primary">
+                    Seguinos en Instagram
+                </a>
                 <a href="#productos" class="btn btn-secondary">Ver Productos</a>
             </div>
         </div>
+        <div class="hero-leaves">🍃</div>
     </main>
 
     <section id="quienes-somos" class="section-container">
@@ -48,102 +52,95 @@
     </section>
 
     <section id="que-hacemos" class="features-section">
-        <div style="text-align: center; margin-bottom: 50px;">
+        <div class="section-header">
             <span class="section-subtitle">Compromiso Biológico</span>
             <h2 class="section-title">Qué Hacemos</h2>
         </div>
         <div class="grid-cards">
-            <div class="card">
+            <div class="card interactive-card">
                 <div class="card-icon">🌱</div>
                 <h3>Regeneración Orgánica</h3>
                 <p>Desarrollamos biotecnología aplicada para devolver los nutrientes vitales, la estructura porosa y la retención hídrica natural a los suelos agotados.</p>
+                <div class="card-progress"></div>
             </div>
-            <div class="card">
+            <div class="card interactive-card">
                 <div class="card-icon">🧪</div>
                 <h3>Activación Microbiológica</h3>
                 <p>Inoculamos billones de microorganismos benéficos que facilitan la absorción de minerales y protegen las raíces contra plagas y patógenos externos.</p>
+                <div class="card-progress"></div>
             </div>
-            <div class="card">
+            <div class="card interactive-card">
                 <div class="card-icon">♻️</div>
                 <h3>Sustentabilidad Local</h3>
                 <p>Promovemos prácticas circulares reduciendo drásticamente la dependencia de fertilizantes químicos sintéticos que dañan las capas subterráneas.</p>
+                <div class="card-progress"></div>
             </div>
         </div>
     </section>
 
     <section id="productos" class="features-section">
-        <div style="text-align: center; margin-bottom: 50px;">
+        <div class="section-header">
             <span class="section-subtitle">Catálogo Vital</span>
             <h2 class="section-title">Qué Vendemos &amp; Promovemos</h2>
         </div>
         <div id="contenedor-productos" class="grid-cards">
-            <p>Cargando nutrientes orgánicos...</p>
+            <p class="loading-text">Cargando nutrientes orgánicos...</p>
         </div>
     </section>
 
     <footer class="main-footer">
-        <p>&copy; 2026 Suelos Orgánicos Bahía. Todos los derechos reservados. Impulsando la soberanía de nuestra tierra.</p>
+        <p>&copy; 2026 Suelos Orgánicos Bahía. Todos los derechos reservados.</p>
+        <p class="footer-sub">Impulsando la soberanía de nuestra tierra desde el sur argentino. 🌍</p>
     </footer>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    
     <script>
         const SUPABASE_URL = "https://grjjghvqhbwezrqhsmbe.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyampnaHZxaGJ3ZXpycWhzbWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5MjcwNzgsImV4cCI6MjA5OTUwMzA3OH0.6hlhnhoxcV6ra_TMvH3B7x9WGRb-lgQmXkCLP_T48T0";
 
         async function cargarProductos() {
             const contenedor = document.getElementById('contenedor-productos');
-            
             if (!contenedor) return;
-
-            // Busca la librería registrada de ambas formas (mayúscula o minúscula)
             const libSupabase = window.supabase || window.Supabase;
 
             if (!libSupabase) {
-                contenedor.innerHTML = `<p style="color: #b78a62;">❌ Error: El navegador no pudo cargar la librería de Supabase. Revisa tu conexión a internet.</p>`;
+                contenedor.innerHTML = `<p style="color: #b78a62;">❌ Error al conectar con la biblioteca.</p>`;
                 return;
             }
 
             try {
                 const supabaseClient = libSupabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-                // Consulta la tabla 'productos' cambiada previamente
-                const { data: productos, error } = await supabaseClient
-                    .from('productos')
-                    .select('*');
+                const { data: productos, error } = await supabaseClient.from('productos').select('*');
 
                 if (error) {
-                    console.error("Error devuelto por Supabase:", error);
-                    contenedor.innerHTML = `<p style="color: #b78a62;">⚠️ Supabase dice: ${error.message} (Código: ${error.code})</p>`;
+                    contenedor.innerHTML = `<p style="color: #b78a62;">⚠️ Error: ${error.message}</p>`;
                     return;
                 }
 
-                contenedor.innerHTML = ''; // Limpiar el estado de carga
+                contenedor.innerHTML = '';
 
                 if (!productos || productos.length === 0) {
-                    contenedor.innerHTML = '<p>La tabla "productos" se conectó bien, pero no tiene filas cargadas aún.</p>';
+                    contenedor.innerHTML = '<p>No hay productos disponibles por el momento.</p>';
                     return;
                 }
 
-                // Renderizado de las tarjetas de catálogo
                 productos.forEach(prod => {
                     const tarjeta = document.createElement('div');
-                    tarjeta.className = 'card product-card';
+                    tarjeta.className = 'card product-card interactive-card';
                     tarjeta.innerHTML = `
                         <div class="product-badge">$${prod.precio || 0}</div>
+                        <div class="card-icon">📦</div>
                         <h3>${prod.nombre || 'Producto sin nombre'}</h3>
                         <p>${prod.descripcion || 'Sin descripción'}</p>
+                        <div class="card-progress"></div>
                     `;
                     contenedor.appendChild(tarjeta);
                 });
 
             } catch (err) {
-                console.error("Error crítico de ejecución:", err);
-                contenedor.innerHTML = `<p style="color: #b78a62;">💥 Error de JS: ${err.message}</p>`;
+                contenedor.innerHTML = `<p style="color: #b78a62;">💥 Error de carga.</p>`;
             }
         }
-
-        // Ejecución inmediata al leer el DOM, evitando esperas pesadas de window.onload
         cargarProductos();
     </script>
 </body>
