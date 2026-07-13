@@ -76,31 +76,7 @@
         </div>
     </section>
 
-    <!-- Sección: Qué Vendemos y Promovemos -->
-    <section id="productos" class="features-section">
-        <div style="text-align: center; margin-bottom: 50px;">
-            <span class="section-subtitle">Catálogo Vital</span>
-            <h2 class="section-title">Qué Vendemos &amp; Promovemos</h2>
-        </div>
-        <div class="grid-cards">
-            <div class="card product-card">
-                <div class="product-badge">Premium</div>
-                <h3>Enmienda Líquida Orgánica</h3>
-                <p>Nuestro producto estrella: un concentrado líquido purificado rico en ácidos húmicos, fúlvicos y flora microbiana activa. Diseñado para una fácil aplicación foliar o por riego directo.</p>
-            </div>
-            <div class="card product-card">
-                <h3>Consciencia de Cultivo</h3>
-                <p>No solo proveemos insumos de alta calidad; promovemos activamente la educación ambiental, el asesoramiento personalizado y técnicas regenerativas para el desarrollo de comunidades conscientes.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pie de página -->
-    <footer class="main-footer">
-        <p>&copy; 2026 Suelos Orgánicos Bahía. Todos los derechos reservados. Impulsando la soberanía de nuestra tierra.</p>
-    </footer>
-
-    <!-- Reemplaza tu sección de productos vieja por este contenedor dinámico -->
+    <!-- Sección Dinámica: Catálogo de Productos desde Supabase -->
     <section id="productos" class="features-section">
         <div style="text-align: center; margin-bottom: 50px;">
             <span class="section-subtitle">Catálogo Vital</span>
@@ -112,19 +88,22 @@
         </div>
     </section>
 
-    <!-- ... el resto de tu HTML ... -->
+    <!-- Pie de página -->
+    <footer class="main-footer">
+        <p>&copy; 2026 Suelos Orgánicos Bahía. Todos los derechos reservados. Impulsando la soberanía de nuestra tierra.</p>
+    </footer>
 
-    <!-- LIBRERÍA DE SUPABASE (Colócala al final del body) -->
+    <!-- LIBRERÍA DE SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- TU CÓDIGO DE CONEXIÓN -->
+    <!-- TU CÓDIGO DE CONEXIÓN CORREGIDO -->
     <script>
-        // 1. Configura tus credenciales (Las encuentras en Supabase -> Project Settings -> API)
+        // 1. Configura tus credenciales
         const SUPABASE_URL = "https://grjjghvqhbwezrqhsmbe.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyampnaHZxaGJ3ZXpycWhzbWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5MjcwNzgsImV4cCI6MjA5OTUwMzA3OH0.6hlhnhoxcV6ra_TMvH3B7x9WGRb-lgQmXkCLP_T48T0";
 
-        // 2. Inicializa el cliente de Supabase
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // 2. Inicializa el cliente usando 'Supabase' en mayúscula
+        const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // 3. Función para traer los productos de la base de datos
         async function cargarProductos() {
@@ -134,13 +113,20 @@
 
             if (error) {
                 console.error("Error cargando productos:", error);
+                document.getElementById('contenedor-productos').innerHTML = '<p>Error al conectar con el catálogo biológico.</p>';
                 return;
             }
 
             const contenedor = document.getElementById('contenedor-productos');
             contenedor.innerHTML = ''; // Limpiamos el texto de "Cargando..."
 
-            // 4. Dibujar las tarjetas en el HTML usando tus estilos CSS
+            // Si no hay productos en la base de datos avisamos
+            if (productos.length === 0) {
+                contenedor.innerHTML = '<p>Próximamente más productos en catálogo...</p>';
+                return;
+            }
+
+            // 4. Dibujar las tarjetas en el HTML
             productos.forEach(prod => {
                 const tarjeta = document.createElement('div');
                 tarjeta.className = 'card product-card';

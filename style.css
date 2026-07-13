@@ -136,9 +136,11 @@ body {
     letter-spacing: -1px;
 }
 
+/* Corregido con soporte estándar y experimental */
 .text-gradient {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -286,52 +288,3 @@ body {
 }
 
 /* Estilos de Producto Específicos */
-.product-card {
-    position: relative;
-    border-left: 3px solid var(--secondary);
-}
-
-.product-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: rgba(183, 138, 98, 0.12);
-    border: 1px solid var(--secondary);
-    color: var(--secondary);
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-/* ==========================================================================
-   FOOTER & ANIMACIONES NATIVAS
-   ========================================================================== */
-.main-footer {
-    text-align: center;
-    padding: 45px 24px;
-    border-top: 1px solid rgba(143, 161, 137, 0.05);
-    background-color: var(--bg-surface);
-}
-
-.main-footer p {
-    color: var(--text-muted);
-    font-size: 0.88rem;
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   RESPONSIVE DESIGN (Soporte móvil automático)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .hero-content h1 { font-size: 2.2rem; }
-    .cta-group { flex-direction: column; gap: 12px; }
-    .nav-container { padding: 15px; }
-    .nav-links { gap: 15px; }
-    .about-grid { padding: 30px 20px; }
-}
