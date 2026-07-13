@@ -97,50 +97,63 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- TU CÓDIGO DE CONEXIÓN CORREGIDO -->
-    <script>
-        // 1. Configura tus credenciales
-        const SUPABASE_URL = "https://grjjghvqhbwezrqhsmbe.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyampnaHZxaGJ3ZXpycWhzbWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5MjcwNzgsImV4cCI6MjA5OTUwMzA3OH0.6hlhnhoxcV6ra_TMvH3B7x9WGRb-lgQmXkCLP_T48T0";
+    <!-- TU CÓDIGO DE CONEXIÓN DIAGNÓSTICO -->
+<script>
+    const SUPABASE_URL = "https://grjjghvqhbwezrqhsmbe.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyampnaHZxaGJ3ZXpycWhzbWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5MjcwNzgsImV4cCI6MjA5OTUwMzA3OH0.6hlhnhoxcV6ra_TMvH3B7x9WGRb-lgQmXkCLP_T48T0";
 
-        // 2. Inicializa el cliente usando 'Supabase' en mayúscula
-        const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    async function cargarProductos() {
+        const contenedor = document.getElementById('contenedor-productos');
+        
+        // 1. Verificamos que la librería de Supabase cargó bien
+        if (typeof Supabase === 'undefined') {
+            contenedor.innerHTML = `<p style="color: #b78a62;">❌ Error: La librería de Supabase no se cargó correctamente en el HTML.</p>`;
+            return;
+        }
 
-        // 3. Función para traer los productos de la base de datos
-        async function cargarProductos() {
+        try {
+            const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            // 2. Intentamos pedir los datos
             const { data: productos, error } = await supabase
                 .from('productos')
                 .select('*');
 
+            // 3. Si Supabase devuelve un error específico
             if (error) {
-                console.error("Error cargando productos:", error);
-                document.getElementById('contenedor-productos').innerHTML = '<p>Error al conectar con el catálogo biológico.</p>';
+                console.error("Error devuelto por Supabase:", error);
+                contenedor.innerHTML = `<p style="color: #b78a62;">⚠️ Supabase dice: ${error.message} (Código: ${error.code})</p>`;
                 return;
             }
 
-            const contenedor = document.getElementById('contenedor-productos');
-            contenedor.innerHTML = ''; // Limpiamos el texto de "Cargando..."
+            contenedor.innerHTML = ''; // Limpiamos el cargando
 
-            // Si no hay productos en la base de datos avisamos
-            if (productos.length === 0) {
-                contenedor.innerHTML = '<p>Próximamente más productos en catálogo...</p>';
+            // 4. Si la conexión funcionó pero no trajo filas
+            if (!productos || productos.length === 0) {
+                contenedor.innerHTML = '<p>La tabla "productos" se conectó bien, pero está vacía. ¡Carga un producto desde tu panel!</p>';
                 return;
             }
 
-            // 4. Dibujar las tarjetas en el HTML
+            // 5. Si todo está perfecto, dibuja las tarjetas
             productos.forEach(prod => {
                 const tarjeta = document.createElement('div');
                 tarjeta.className = 'card product-card';
                 tarjeta.innerHTML = `
-                    <div class="product-badge">$${prod.precio}</div>
-                    <h3>${prod.nombre}</h3>
-                    <p>${prod.descripcion}</p>
+                    <div class="product-badge">$${prod.precio || 0}</div>
+                    <h3>${prod.nombre || 'Producto sin nombre'}</h3>
+                    <p>${prod.descripcion || 'Sin descripción'}</p>
                 `;
                 contenedor.appendChild(tarjeta);
             });
-        }
 
-        // Ejecutar la función al cargar la página
-        cargarProductos();
-    </script>
+        } catch (err) {
+            console.error("Error crítico de ejecución:", err);
+            contenedor.innerHTML = `<p style="color: #b78a62;">💥 Error de JS: ${err.message}</p>`;
+        }
+    }
+
+    // Ejecutar al cargar
+    window.onload = cargarProductos;
+</script>
 </body>
 </html>
