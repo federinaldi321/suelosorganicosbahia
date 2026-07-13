@@ -1,290 +1,61 @@
-/* ==========================================================================
-   RESET & VARIABLES (Inspiración Orgánica: Tierra & Follaje vivo)
-   ========================================================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-:root {
-    --bg-dark: #0a0c08;       /* Negro orgánico profundo */
-    --bg-surface: #12160f;    /* Verde musgo oscuro profundo */
-    --bg-card: #191f15;       /* Sombra de bosque */
-    --primary: #52b788;       /* Verde brote vibrante */
-    --primary-glow: rgba(82, 183, 136, 0.2);
-    --secondary: #b78a62;     /* Marrón tierra arcillosa fértil */
-    --text-main: #f4f6f0;     /* Blanco lino suave */
-    --text-muted: #8fa189;    /* Verde hoja seca */
-    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    overflow-x: hidden;
-    line-height: 1.6;
-}
-
-/* Efecto Luz Biológica de Fondo */
-.bg-glow {
-    position: fixed;
-    top: -150px;
-    right: -150px;
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, rgba(82,183,136,0.12) 0%, rgba(183,138,98,0.04) 50%, rgba(0,0,0,0) 100%);
-    z-index: -1;
-    filter: blur(90px);
-    pointer-events: none;
-}
-
-/* ==========================================================================
-   HEADER / NAVIGATION (Efecto cristal translúcido de bosque)
-   ========================================================================== */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    background-color: rgba(10, 12, 8, 0.8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(143, 161, 137, 0.08);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: #ffffff;
-}
-
-.logo span {
-    color: var(--secondary);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 24px;
-}
-
-.nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: var(--primary);
-}
-
-/* ==========================================================================
-   HERO SECTION
-   ========================================================================== */
-.hero-section {
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 140px 24px 60px 24px;
-    text-align: center;
-}
-
-.hero-content {
-    max-width: 780px;
-    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.badge {
-    background-color: rgba(82, 183, 136, 0.08);
-    border: 1px solid rgba(82, 183, 136, 0.25);
-    color: var(--primary);
-    padding: 6px 18px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 24px;
-}
-
-.hero-content h1 {
-    font-size: 3.2rem;
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 24px;
-    letter-spacing: -1px;
-}
-
-/* Corregido con soporte estándar y experimental */
-.text-gradient {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero-content p {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    margin-bottom: 36px;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.cta-group {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-}
-
-.btn {
-    display: inline-block;
-    text-decoration: none;
-    padding: 14px 30px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: var(--transition);
-}
-
-.btn-primary {
-    background-color: var(--primary);
-    color: #07080d;
-    box-shadow: 0 4px 15px var(--primary-glow);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(82, 183, 136, 0.35);
-    background-color: #60c395;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.02);
-    border-color: var(--secondary);
-    transform: translateY(-3px);
-}
-
-/* ==========================================================================
-   SECCIONES GENERALES & QUIÉNES SOMOS
-   ========================================================================== */
-.section-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 24px;
-}
-
-.section-subtitle {
-    color: var(--secondary);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.about-grid {
-    background-color: var(--bg-surface);
-    border: 1px solid rgba(143, 161, 137, 0.05);
-    padding: 50px 40px;
-    border-radius: 16px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.about-text h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 20px;
-    letter-spacing: -0.5px;
-}
-
-.about-text p {
-    margin-bottom: 16px;
-    color: var(--text-main);
-    opacity: 0.9;
-}
-
-/* ==========================================================================
-   SECCIÓN CARACTERÍSTICAS & PRODUCTOS (GRID)
-   ========================================================================== */
-.features-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 90px 24px;
-}
-
-.section-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-top: 5px;
-}
-
-.grid-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-}
-
-.card {
-    background-color: var(--bg-surface);
-    border: 1px solid rgba(143, 161, 137, 0.03);
-    padding: 40px 32px;
-    border-radius: 10px;
-    transition: var(--transition);
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(82, 183, 136, 0.15);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-}
-
-.card-icon {
-    font-size: 1.8rem;
-    margin-bottom: 16px;
-}
-
-.card h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.card p {
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    line-height: 1.5;
-}
-
 /* Estilos de Producto Específicos */
+.product-card {
+    position: relative;
+    border-left: 3px solid var(--secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(183, 138, 98, 0.12);
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   FOOTER & ANIMACIONES
+   ========================================================================== */
+.main-footer {
+    text-align: center;
+    padding: 45px 24px;
+    border-top: 1px solid rgba(143, 161, 137, 0.05);
+    background-color: var(--bg-surface);
+    margin-top: 60px;
+}
+
+.main-footer p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* ==========================================================================
+   SOPORTE MÓVIL
+   ========================================================================== */
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.2rem; }
+    .cta-group { flex-direction: column; gap: 12px; }
+    .nav-container { padding: 15px; }
+    .nav-links { gap: 15px; }
+    .about-grid { padding: 30px 20px; }
+}
